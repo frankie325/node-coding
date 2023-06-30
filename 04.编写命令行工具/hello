@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+/*
+#! unix类操作系统中叫做 shebang 
+一个普通文件带有#!开头的，说明这个文件可以当做脚本来运行，起到标识的作用
+
+/usr/bin/env node这行的意思就是用node来执行此文件
+
+修改 hello 的权限
+chmod 755 hello
+
+现在，hello 就可以执行了。
+./hello
+输出hello world
+
+如果想在命令行直接输入命令 hello 
+
+可以在package.json中设置 bin属性
+
+并执行npm link
+*/
+console.log('hello world');
+
+
