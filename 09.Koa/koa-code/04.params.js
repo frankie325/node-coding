@@ -12,7 +12,7 @@ app.use((ctx, next) => {
 
 userRouter.get('/:id', (ctx, next) => {
   // localhost:8000/users/001
-  console.log(ctx.request.params); //使用路由则可以接收restful风格参数
+  console.log(ctx.request.params); //使用路由则可以接收restful风格参数，在params参数中
   ctx.body = 'find success';
 });
 
