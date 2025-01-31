@@ -4,7 +4,7 @@ const filePath = '/User/frank/hello.txt';
 console.log(__dirname); // 当前文件所在目录路径  /Users/frank/code/mine/node-coding/03.常见内置模块/path
 console.log(__filename); // 当前文件路径
 console.log(path.sep); // 路径分割符  windows为\  posix为/
-console.log('dirname', filePath); // /User/frank   返回所在的文件路径
+console.log(' ', filePath); // /User/frank   返回所在的文件路径
 console.log('basename', path.basename(filePath)); // hello.txt     返回文件名字
 console.log('extname', path.extname(filePath)); // .txt          返回文件后缀名称
 
@@ -93,3 +93,37 @@ console.log(
     ext: '.txt',
   })
 ); //   /file.txt
+console.log('--------------------------------');
+// path.posix 提供了对 POSIX（Unix-like 系统，如 Linux、macOS）风格路径的操作方法。
+// 它的主要作用是确保在任何操作系统上都使用 POSIX 风格的路径处理方式，而不受当前运行平台的影响。
+console.log(path.posix.basename('/foo/bar/baz/asdf/quux.html')); // quux.html
+console.log(path.win32.basename('C:\\foo\\bar\\baz\\asdf\\quux.html')); // quux.html
+
+/*
+! path.posix 和 path.win32 的主要区别
+*/
+// 1. 路径分隔符不同
+console.log('POSIX separator:', path.posix.sep);  // 输出: /
+console.log('Windows separator:', path.win32.sep); // 输出: \
+
+// 2. 路径格式不同
+// POSIX 风格
+console.log(path.posix.join('/users', 'local', 'bin')); 
+// 输出: /users/local/bin
+
+// Windows 风格
+console.log(path.win32.join('C:\\Users', 'AppData', 'Local')); 
+// 输出: C:\Users\AppData\Local
+
+// 3. 绝对路径判断不同
+console.log(path.posix.isAbsolute('/users/local')); // true
+console.log(path.posix.isAbsolute('users/local'));  // false
+console.log(path.win32.isAbsolute('C:\\Users'));    // true
+console.log(path.win32.isAbsolute('Users\\local')); // false
+
+// 4. 根路径格式不同
+const posixPath = path.posix.parse('/home/user/file.txt');
+console.log('POSIX root:', posixPath.root);  // 输出: /
+
+const winPath = path.win32.parse('C:\\Users\\file.txt');
+console.log('Windows root:', winPath.root);   // 输出: C:\
