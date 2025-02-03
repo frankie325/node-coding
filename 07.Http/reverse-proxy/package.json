@@ -1,11 +1,8 @@
 {
-  "name": "commander",
+  "name": "reverse-proxy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "bin": {
-    "cm": "pm.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.0"
+    "http-proxy-middleware": "^3.0.3"
   }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const sse = new EventSource('http://localhost:8000/sse');
+
+      // 监听消息 默认是message事件
+      sse.onmessage = (event) => {
+        console.log(event.data);
+      };
+
+      // 监听错误
+      sse.onerror = (event) => {
+        console.log(event);
+      };
+
+      // 监听自定义事件
+      sse.addEventListener('customEvent', (event) => {
+        console.log(event.data);
+      });
+    </script>
+  </body>
+</html>
