@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input id="file" type="file" />
+    <!--用来上传文件-->
+    <script type="module">
+      // 默认切成4MB大小的chunk，1024 * 1024 * 4 = 4MB
+      const chunkFun = (file, size = 1024 * 1024 * 4) => {
+        const chunks = [];
+        // 文件size单位为byte
+        for (let i = 0; i < file.size; i += size) {
+          //   const element = array[i];
+          chunks.push(file.slice(i, i + size));
+        }
+        return chunks;
+      };
+
+      const uploadFile = (chunks) => {
+        const list = [];
+        for (let i = 0; i < chunks.length; i++) {
+          const formData = new FormData();
+          formData.append('index', i); //索引，切片顺序不能乱
+          formData.append('total', chunks.length);
+          formData.append('fileName', 'xiezhen');
+          formData.append('file', chunks[i]);
+          // 批量上传文件切片
+          list.push(
+            fetch('http://127.0.0.1:3000/up', {
+              method: 'POST',
+              body: formData,
+            })
+          );
+        }
+
+        Promise.all(list).then((res) => {
+            // 合并文件
+            fetch('http://127.0.0.1:3000/merge', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                fileName: 'xieZhen',
+              }),
+            }).then((res) => {
+              console.log(res);
+            });
+        });
+      };
+      
+      const file = document.getElementById('file');
+      file.addEventListener('change', (event) => {
+        const file = event.target.files[0]; //获取文件信息
+        const chunks = chunkFun(file); //将Blob对象切割成4MB大小的chunk
+        console.log(chunks);
+        uploadFile(chunks);
+      });
+    </script>
+  </body>
+</html>
